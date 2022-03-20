@@ -8,9 +8,6 @@ namespace Entities.Player.Scripts.Movement.StateMachine.Substates.MovementSubsta
         
         private readonly PlayerStateMachine _context;
         private readonly MovementSubstateFactory _factory;
-        
-        private Vector3 _previousPosition = Vector3.zero;
-        private Vector3 _currentPosition = Vector3.zero;
 
         public Walk(PlayerStateMachine context, MovementSubstateFactory factory)
         {
@@ -39,21 +36,17 @@ namespace Entities.Player.Scripts.Movement.StateMachine.Substates.MovementSubsta
 
             if (_context.GetLastMoveVector().normalized.magnitude == 0) newState = _factory.Idle();
             else if (_context.CharacterInput.IsRunning) newState = _factory.Run();
-            else if (!_context.CharacterController.isGrounded) newState = _factory.Fall(_currentPosition - _previousPosition);
-            else if (_context.CharacterInput.IsJumped) newState = _factory.Jump(_currentPosition - _previousPosition);
+            else if (!_context.CharacterController.isGrounded) newState = _factory.Fall(_context.PlayerMover.GetMove(_context.StateMoveName));
+            else if (_context.CharacterInput.IsJumped) newState = _factory.Jump(_context.PlayerMover.GetMove(_context.StateMoveName));
             
             return newState != null;
         }
 
         private void MoveCharacter()
         {
-            _previousPosition = _currentPosition;
-
             var newMove = _context.GetLastMoveVector();
             newMove *= _context.walkSpeed * _context.GetSlopeModifier();
             _context.PlayerMover.ChangeMove(_context.StateMoveName, newMove);
-
-            _currentPosition = _context.transform.position;
         }
     }
 }

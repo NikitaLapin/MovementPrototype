@@ -32,7 +32,7 @@ namespace Entities.Player.Scripts.Movement.StateMachine.Substates.MovementSubsta
         {
             newState = null;
             if (_context.PlayerMover.GetMove(_context.GravityMoveName).y <= 0f) newState = _factory.Fall(_lastInput);
-            else if (_context.CharacterController.isGrounded) newState = _factory.Idle();
+            else if (_context.CharacterController.isGrounded) newState = _factory.SlidingStop(_lastInput);
 
             return newState != null;
         }

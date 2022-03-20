@@ -74,9 +74,19 @@ namespace Entities.Player.Scripts.Movement.StateMachine
 
         public float GetSlopeModifier()
         {
-            var ray = new Ray(transform.position, Vector3.down);
-            if(!Physics.Raycast(ray, out var rayHit,CharacterController.height / 2 + 1f)) return 1f;
-            return slopeSpeedModifierCurve.Evaluate(Vector3.Angle(Vector3.up, rayHit.normal));
+            var itsTransform = transform;
+            var position = itsTransform.position;
+
+            var sourceRay = new Ray(position, Vector3.down);
+            var frontRay = new Ray(position + itsTransform.forward * 0.05f, Vector3.down);
+
+            if (!Physics.Raycast(sourceRay, out var sourceHit, CharacterController.height)) return 1f;
+            var rawModifier = slopeSpeedModifierCurve.Evaluate(Vector3.Angle(Vector3.up, sourceHit.normal));
+            if (!Physics.Raycast(sourceRay, out var frontHit, CharacterController.height + 1f) ||
+                sourceHit.transform.position.y - frontHit.transform.position.y == 0) return 1f;
+
+            if (sourceHit.transform.position.y > frontHit.transform.position.y) rawModifier += 1f;
+            return rawModifier;
         }
 
         public Vector3 GetLastMoveVector()

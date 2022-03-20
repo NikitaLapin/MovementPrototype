@@ -7,9 +7,6 @@ namespace Entities.Player.Scripts.Movement.StateMachine.Substates.MovementSubsta
         private readonly PlayerStateMachine _context;
         private readonly MovementSubstateFactory _factory;
         public float StateTimer { get; private set; }
-        
-        private Vector3 _previousPosition = Vector3.zero;
-        private Vector3 _currentPosition = Vector3.zero;
 
         public Run(PlayerStateMachine context, MovementSubstateFactory factory)
         {
@@ -35,8 +32,8 @@ namespace Entities.Player.Scripts.Movement.StateMachine.Substates.MovementSubsta
         public bool TrySwitchState(out ISubstate newState)
         {
             newState = null;
+            var lastMove = _context.PlayerMover.GetMove(_context.StateMoveName);
             if (StateTimer < _context.minStateTime) return false;
-            var lastMove = _currentPosition - _previousPosition;
             
             if (_context.GetLastMoveVector().normalized.magnitude == 0) newState = _factory.SlidingStop(lastMove);
             else if (!_context.CharacterInput.IsRunning) newState = _factory.SlidingStop(lastMove);
@@ -48,13 +45,9 @@ namespace Entities.Player.Scripts.Movement.StateMachine.Substates.MovementSubsta
         
         private void MoveCharacter()
         {
-            _previousPosition = _currentPosition;
-            
             var newMove = _context.GetLastMoveVector();
             newMove *= _context.walkSpeed + _context.runSpeedUpCurve.Evaluate(StateTimer) * _context.runModifier * _context.GetSlopeModifier();
             _context.PlayerMover.ChangeMove(_context.StateMoveName, newMove);
-            
-            _currentPosition = _context.transform.position;
         }
     }
 }

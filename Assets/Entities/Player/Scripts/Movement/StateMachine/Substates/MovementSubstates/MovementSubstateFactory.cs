@@ -17,6 +17,5 @@ namespace Entities.Player.Scripts.Movement.StateMachine.Substates.MovementSubsta
         public ISubstate SlidingStop(Vector3 lastMove) => new SlidingStop(_context, this, lastMove);
         public ISubstate Jump(Vector3 lastMove) => new Jump(_context, this, lastMove);
         public ISubstate Fall(Vector3 lastMove) => new Fall(_context, this, lastMove);
-        public ISubstate SlopeSlide() => new SlopeSlide(_context, this);
     }
 }

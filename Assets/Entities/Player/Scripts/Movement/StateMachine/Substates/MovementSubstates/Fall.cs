@@ -36,7 +36,7 @@ namespace Entities.Player.Scripts.Movement.StateMachine.Substates.MovementSubsta
         public bool TrySwitchState(out ISubstate newState)
         {
             newState = null;
-            if (_context.CharacterController.isGrounded) newState = _factory.Idle();
+            if (_context.CharacterController.isGrounded) newState = _factory.SlidingStop(_lastInput);
 
             return newState != null;
         }

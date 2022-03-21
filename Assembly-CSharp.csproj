@@ -68,6 +68,7 @@
      <Compile Include="Assets\Entities\Player\Scripts\Movement\StateMachine\States\IState.cs" />
      <Compile Include="Assets\Entities\Player\Scripts\Movement\StateMachine\PlayerStateMachine.cs" />
      <Compile Include="Assets\Entities\Player\Scripts\Movement\MovementInput\CharacterInputHandler.cs" />
+     <Compile Include="Assets\Entities\Player\Scripts\Movement\StateMachine\Substates\MovementSubstates\SlopeSlide.cs" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.29f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>

@@ -38,6 +38,7 @@ namespace Entities.Player.Scripts.Movement.StateMachine.Substates.MovementSubsta
             else if (_context.CharacterInput.IsRunning) newState = _factory.Run();
             else if (!_context.CharacterController.isGrounded) newState = _factory.Fall(_context.PlayerMover.GetMove(_context.StateMoveName));
             else if (_context.CharacterInput.IsJumped) newState = _factory.Jump(_context.PlayerMover.GetMove(_context.StateMoveName));
+            else if(_context.TryGetIncline(out var incline) && incline >= _context.CharacterController.slopeLimit) newState = _factory.SlopeSlide();
             
             return newState != null;
         }

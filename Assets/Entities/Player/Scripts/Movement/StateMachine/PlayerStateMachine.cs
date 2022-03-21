@@ -11,18 +11,21 @@ namespace Entities.Player.Scripts.Movement.StateMachine
     public class PlayerStateMachine : MonoBehaviour
     {
         [Header("Move parameters")] 
-        public float walkSpeed = 3f;
-        public float runModifier = 2f;
-        [Range(0, 1)] public float moveAfterStopOffset;
+        [Range(0f, 10f)] public float walkSpeed = 3f;
+        [Range(0f, 5f)] public float runModifier = 1.5f;
+        [Range(0f, 1f)] public float minSlidingTime = 0.2f;
+        [Range(0f, 3f)] public float slopeSpeed = 1f;
         [Space]
+        public float jumpStrength = 2f;
+        public bool isGravitated = true;
+        public float gravity = -9.81f;
+        public float minStateTime = 0.1f;
+        [Space]
+        [Header("Move Curves")]
         public AnimationCurve runSpeedUpCurve;
         public AnimationCurve stopAfterRunCurve;
         public AnimationCurve slopeSpeedModifierCurve;
-        [Space] 
-        public float jumpStrength;
-        public bool isGravitated = true;
-        public float gravity = -0.981f;
-        public float minStateTime = 0.1f;
+        public AnimationCurve slidingSlopeSpeed;
         [Header("Parkour parameters")] 
         
         [Header("Fight parameters")]
@@ -30,6 +33,7 @@ namespace Entities.Player.Scripts.Movement.StateMachine
         [NonSerialized] public CharacterController CharacterController;
         [NonSerialized] public CharacterInputHandler CharacterInput;
         [NonSerialized] public PlayerMover PlayerMover;
+        [NonSerialized] public Transform Transform;
 
         [NonSerialized] public string GravityMoveName = "Gravity Move";
         [NonSerialized] public string StateMoveName = "State Move";
@@ -42,6 +46,7 @@ namespace Entities.Player.Scripts.Movement.StateMachine
             CharacterController = GetComponent<CharacterController>();
             CharacterInput = GetComponent<CharacterInputHandler>();
             PlayerMover = GetComponent<PlayerMover>();
+            Transform = GetComponent<Transform>();
 
             _factory = new StateFactory(this);
             _currentState = _factory.MovementState();
@@ -74,11 +79,10 @@ namespace Entities.Player.Scripts.Movement.StateMachine
 
         public float GetSlopeModifier()
         {
-            var itsTransform = transform;
-            var position = itsTransform.position;
+            var position = Transform.position;
 
             var sourceRay = new Ray(position, Vector3.down);
-            var frontRay = new Ray(position + itsTransform.forward * 0.05f, Vector3.down);
+            var frontRay = new Ray(position + Transform.forward * 0.05f, Vector3.down);
 
             if (!Physics.Raycast(sourceRay, out var sourceHit, CharacterController.height)) return 1f;
             var rawModifier = slopeSpeedModifierCurve.Evaluate(Vector3.Angle(Vector3.up, sourceHit.normal));
@@ -97,6 +101,16 @@ namespace Entities.Player.Scripts.Movement.StateMachine
             vector3Input *= Time.deltaTime;
 
             return vector3Input;
+        }
+        
+        public bool TryGetIncline(out float incline)
+        {
+            incline = 0f;
+            var ray = new Ray(Transform.position, Vector3.down);
+            if(!Physics.Raycast(ray, out var hitInfo, CharacterController.height)) return false;
+            
+            incline = Vector3.Angle(Vector3.up, hitInfo.normal);
+            return true;
         }
     }
 }

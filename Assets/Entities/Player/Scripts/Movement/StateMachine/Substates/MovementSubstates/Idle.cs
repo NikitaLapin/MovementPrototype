@@ -31,6 +31,7 @@ namespace Entities.Player.Scripts.Movement.StateMachine.Substates.MovementSubsta
             if (_context.GetLastMoveVector().normalized.magnitude != 0) newState = _factory.Walk();
             else if (!_context.CharacterController.isGrounded) newState = _factory.Fall(Vector3.zero);
             else if (_context.CharacterInput.IsJumped) newState = _factory.Jump(Vector3.zero);
+            else if(_context.TryGetIncline(out var incline) && incline >= _context.CharacterController.slopeLimit) newState = _factory.SlopeSlide();
             
             return newState != null;
         }

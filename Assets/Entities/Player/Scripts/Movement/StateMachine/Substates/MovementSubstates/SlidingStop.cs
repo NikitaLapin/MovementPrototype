@@ -36,8 +36,8 @@ namespace Entities.Player.Scripts.Movement.StateMachine.Substates.MovementSubsta
         {
             newState = null;
             if (StateTimer >= _duration || _context.stopAfterRunCurve.Evaluate(StateTimer) == 0) newState = _factory.Idle();
-            if (StateTimer > _duration * _context.moveAfterStopOffset)
-                if (_context.GetLastMoveVector().magnitude != 0) newState = _factory.Walk();
+            else if (StateTimer > _duration * _context.minSlidingTime) if (_context.GetLastMoveVector().magnitude != 0) newState = _factory.Walk();
+            else if(_context.TryGetIncline(out var incline) && incline >= _context.CharacterController.slopeLimit) newState = _factory.SlopeSlide();
 
             return newState != null;
         }

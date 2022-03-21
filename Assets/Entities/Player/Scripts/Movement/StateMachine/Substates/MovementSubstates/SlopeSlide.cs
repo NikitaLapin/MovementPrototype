@@ -45,6 +45,7 @@ namespace Entities.Player.Scripts.Movement.StateMachine.Substates.MovementSubsta
             var slideDirection = new Vector3(hitInfo.normal.x, -hitInfo.normal.y, hitInfo.normal.z);
             
             var move =  slideDirection * _context.slidingSlopeSpeed.Evaluate(incline) * _context.slopeSpeed;
+            move += _context.GetLastMoveVector() * _context.walkSpeed;
             _context.PlayerMover.ChangeMove(_context.StateMoveName, move);
         }
     }

@@ -44,7 +44,7 @@ namespace Entities.Player.Scripts.Movement.StateMachine.Substates.MovementSubsta
             Physics.Raycast(ray, out var hitInfo, _context.CharacterController.height);
             var slideDirection = new Vector3(hitInfo.normal.x, -hitInfo.normal.y, hitInfo.normal.z);
             
-            var move =  slideDirection * _context.slidingSlopeSpeed.Evaluate(incline) * _context.slopeSpeed;
+            var move =  slideDirection * _context.slidingSlopeSpeed.Evaluate(incline) * _context.slopeSpeed * _context.slidingSpeedUpModifier * StateTimer;
             move += _context.GetLastMoveVector() * _context.walkSpeed;
             _context.PlayerMover.ChangeMove(_context.StateMoveName, move);
         }

@@ -15,8 +15,9 @@ namespace Entities.Player.Scripts.Movement.StateMachine
         [Range(0f, 5f)] public float runModifier = 1.5f;
         [Range(0f, 1f)] public float minSlidingTime = 0.2f;
         [Range(0f, 3f)] public float slopeSpeed = 1f;
+        [Range(1f, 3f)] public float slidingSpeedUpModifier = 1.2f;
         [Space]
-        public float jumpStrength = 2f;
+        public float jumpStrength = 4f;
         public bool isGravitated = true;
         public float gravity = -9.81f;
         public float minStateTime = 0.1f;

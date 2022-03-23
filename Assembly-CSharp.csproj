@@ -65,11 +65,11 @@
      <Compile Include="Assets\Entities\Player\Movement\StateMachine\Substates\MovementSubstates\SlidingStop.cs" />
      <Compile Include="Assets\Entities\Player\Movement\StateMachine\Substates\MovementSubstates\Run.cs" />
      <Compile Include="Assets\Entities\Player\Movement\StateMachine\Substates\MovementSubstates\MovementSubstateFactory.cs" />
+     <Compile Include="Assets\Entities\Player\Visuals\AnimationsController.cs" />
      <Compile Include="Assets\Entities\Player\Scripts\Player.cs" />
      <Compile Include="Assets\Entities\Player\Movement\StateMachine\States\IState.cs" />
      <Compile Include="Assets\Entities\Player\Movement\StateMachine\PlayerStateMachine.cs" />
      <Compile Include="Assets\Entities\Player\Input\CharacterInputHandler.cs" />
-     <Compile Include="Assets\Entities\Player\Visuals\AnimationsController.cs" />
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.29f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>

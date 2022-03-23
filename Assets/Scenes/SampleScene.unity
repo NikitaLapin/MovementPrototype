@@ -172,7 +172,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkSpeed: 3
   runModifier: 1.5
-  moveAfterStopOffset: 0.201
+  minSlidingTime: 0.2
+  slopeSpeed: 0.152
+  slidingSpeedUpModifier: 1.2
+  jumpStrength: 5
+  isGravitated: 1
+  gravity: -10
+  minStateTime: 0.2
   runSpeedUpCurve:
     serializedVersion: 2
     m_Curve:
@@ -263,10 +269,39 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  jumpStrength: 5
-  isGravitated: 1
-  gravity: -10
-  minStateTime: 0.05
+  slidingSlopeSpeed:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 35
+      value: 0
+      inSlope: 0
+      outSlope: 0.03923049
+      tangentMode: 1
+      weightedMode: 0
+      inWeight: 0.052962277
+      outWeight: 0.03052063
+    - serializedVersion: 3
+      time: 90
+      value: 2
+      inSlope: 0.036363635
+      outSlope: 0.036363635
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &50582186
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -355,7 +390,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 50582183}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.93, y: 1, z: -10}
+  m_LocalPosition: {x: -7.34, y: 1.63, z: -11.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

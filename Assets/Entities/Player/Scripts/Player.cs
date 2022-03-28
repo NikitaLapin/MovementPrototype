@@ -14,8 +14,6 @@ namespace Entities.Player.Scripts
         public event Action<Vector2> InputChanged;
         public event Action<bool> RunChanged;
         public event Action<bool> JumpInputChanged;
-        public event Action<bool> JumpChanged; 
-        public event Action<bool> FallChanged; 
 
         #endregion
 
@@ -33,9 +31,6 @@ namespace Entities.Player.Scripts
             _inputHandler.InputChanged += OnInputChanged;
             _inputHandler.JumpChanged += OnJumpInputChanged;
             _inputHandler.RunChanged += OnRunChanged;
-            
-            _playerStateMachine.JumpChanged += OnJumpChanged;
-            _playerStateMachine.FallChanged += OnFallChanged;
         }
 
         private void OnDisable()
@@ -43,15 +38,10 @@ namespace Entities.Player.Scripts
             _inputHandler.InputChanged -= OnInputChanged;
             _inputHandler.JumpChanged -= OnJumpInputChanged;
             _inputHandler.RunChanged -= OnRunChanged;
-            
-            _playerStateMachine.FallChanged -= OnFallChanged;
-            _playerStateMachine.JumpChanged -= OnJumpChanged;
         }
 
         private void OnRunChanged(bool isRunning) => RunChanged?.Invoke(isRunning);
         private void OnJumpInputChanged(bool isJumping) => JumpInputChanged?.Invoke(isJumping);
         private void OnInputChanged(Vector2 newInput) => InputChanged?.Invoke(newInput);
-        private void OnFallChanged(bool isFalling) => FallChanged?.Invoke(isFalling);
-        private void OnJumpChanged(bool isJumping) => JumpChanged?.Invoke(isJumping);
     }
 }
